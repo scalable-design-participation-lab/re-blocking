@@ -158,3 +158,14 @@ cython_debug/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
+data-20230726T204029Z-002.zip
+data/DTM_Boundary.shp
+data/DTM_Boundary.shx
+data/DTM_Tax_Lot_Polygon.shp
+data/DTM_Tax_Lot_Polygon.shx
+data/geo_export_a80ea1a2-e8e0-4ffd-862c-1199433ac303-001.dbf
+data/geo_export_a80ea1a2-e8e0-4ffd-862c-1199433ac303.prj
+data/geo_export_a80ea1a2-e8e0-4ffd-862c-1199433ac303.shp
+data/geo_export_a80ea1a2-e8e0-4ffd-862c-1199433ac303.shx
+data/NewYork_2021_Tax_Parcels_SHP_2203.shp
+data/NewYork_2021_Tax_Parcels_SHP_2203.shx
