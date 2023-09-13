@@ -10,17 +10,17 @@ outputFolder="img/combined"
 mkdir -p "$outputFolder"
 
 # Get a list of image files in folderA
-imageFilesA=("$folderA"/building_*.jpg)
+imageFilesA=("$folderA"/buildings_*.jpg)
 
 # Iterate through the image files
 for imageFileA in "${imageFilesA[@]}"; do
     # Get the corresponding image file in folderB
     imageName=$(basename "$imageFileA")
     imageIndex="${imageName#*_}"
-    imageFileB="$folderB/parcel_$imageIndex"
+    imageFileB="$folderB/parcels_$imageIndex"
 
     # Determine the output filename
-    outputFileName="combined_$imageIndex.jpg"
+    outputFileName="combined_$imageIndex"
     outputPath="$outputFolder/$outputFileName"
 
     # Stitch the images side by side using ImageMagick
