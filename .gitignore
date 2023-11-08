@@ -176,6 +176,11 @@ data/NewYork_2021_Tax_Parcels_SHP_2203.shx
 
 # folders
 img/
+images/
+
+# model checkpoints
+*.pth
+*.pt
 
 # maps
 *-map.html
