@@ -181,3 +181,6 @@ images/
 # model checkpoints
 *.pth
 *.pt
+
+# maps
+*-map.html
