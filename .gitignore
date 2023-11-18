@@ -184,3 +184,7 @@ images/
 
 # maps
 *-map.html
+
+# Discovery Cluster sbatch Scripts
+*.sbatch
+scripts/
