@@ -188,3 +188,6 @@ images/
 # Discovery Cluster sbatch Scripts
 *.sbatch
 scripts/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
