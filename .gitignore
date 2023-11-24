@@ -183,6 +183,7 @@ images/
 *.pt
 
 # maps
+image-generation/maps/
 *-map.html
 
 # Discovery Cluster sbatch Scripts
