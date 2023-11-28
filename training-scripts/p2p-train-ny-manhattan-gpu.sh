@@ -4,8 +4,6 @@
 #SBATCH --job-name=train-ny-m-a100
 #SBATCH --partition=gpu
 ##SBATCH --gres=gpu:v100-sxm2:1
-##SBATCH --gres=gpu:a100:1
-#SBATCH --gres=gpu
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=32GB
 #SBATCH --mail-type=ALL
