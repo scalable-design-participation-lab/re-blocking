@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --nodes=1
-#SBATCH --time=4:00:00
+#SBATCH --time=2:00:00
 #SBATCH --job-name=test-ny-b-v100
 #SBATCH --partition=gpu
 #SBATCH --gres=gpu:v100-sxm2:1
