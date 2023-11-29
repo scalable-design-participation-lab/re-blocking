@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --nodes=1
 #SBATCH --time=8:00:00
-#SBATCH --job-name=train-ny-m-a100
+#SBATCH --job-name=train-nc-c-a100
 #SBATCH --partition=gpu
 ##SBATCH --gres=gpu:v100-sxm2:1
 #SBATCH --gres=gpu:a100:1
