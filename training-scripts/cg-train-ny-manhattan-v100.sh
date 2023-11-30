@@ -13,4 +13,4 @@
 module load anaconda3/2022.05 cuda/11.8
 source activate /home/l.schrage/.conda/envs/re-blocking_env
 
-python3 /work/re-blocking/pytorch-CycleGAN-and-pix2pix/train.py --dataroot /work/re-blocking/data/ny-manhattan --checkpoints_dir /work/re-blocking/checkpoints --name ny-manhattan-cg-200-8-v100-32gb --model cycle_gan --direction AtoB --n_epochs 200 --batch_size 8
+python3 /work/re-blocking/pytorch-CycleGAN-and-pix2pix/train.py --dataroot /work/re-blocking/data/ny-manhattan --checkpoints_dir /work/re-blocking/checkpoints --name ny-manhattan-cg-200-10-v100-32gb --model cycle_gan --direction AtoB --n_epochs 200 --batch_size 10
