@@ -175,9 +175,22 @@ data/NewYork_2021_Tax_Parcels_SHP_2203.shp
 data/NewYork_2021_Tax_Parcels_SHP_2203.shx
 
 # folders
-img/
-images/
+image-generation/img/
 
 # model checkpoints
 *.pth
 *.pt
+
+# maps
+image-generation/maps/
+*-map.html
+
+# Discovery Cluster sbatch Scripts
+*.sbatch
+scripts/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# Images
+images/
