@@ -13,4 +13,6 @@
 module load anaconda3/2022.05 cuda/11.8
 source activate /home/l.schrage/.conda/envs/re-blocking_env
 
-python3 /work/re-blocking/pytorch-CycleGAN-and-pix2pix/test.py --dataroot /work/re-blocking/data/ny-brooklyn --checkpoints_dir /work/re-blocking/checkpoints --name ny-manhattan-p2p-200-150-v100 --model pix2pix
+python pytorch-CycleGAN-and-pix2pix/test.py --dataroot ./data/ny-brooklyn --checkpoints_dir checkpoints --name ma-boston-p2p-200-150-v100 --model pix2pix
+#!./scripts/test_pix2pix.sh
+python test.py --dataroot ./datasets/brooklynn_combined --name ma-boston-p2p-200-150-v100 --model pix2pix --direction BtoA
