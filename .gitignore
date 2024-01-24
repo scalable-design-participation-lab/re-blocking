@@ -181,6 +181,10 @@ image-generation/img/
 *.pth
 *.pt
 
+# compressed files
+*.zip
+*Zone.Identifier
+
 # maps
 image-generation/maps/
 *-map.html
@@ -191,3 +195,4 @@ scripts/
 
 # Jupyter Notebook checkpoints
 .ipynb_checkpoints
+
