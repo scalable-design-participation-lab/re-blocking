@@ -13,4 +13,4 @@
 module load anaconda3/2022.05 cuda/11.8
 source activate /home/l.schrage/.conda/envs/re-blocking_env
 
-python3 /work/re-blocking/pytorch-CycleGAN-and-pix2pix/test.py --dataroot /work/re-blocking/data/ny-brooklyn --checkpoints_dir /work/re-blocking/checkpoints --results_dir /work/re-blocking/results --name ny-manhattan-p2p-200-150-v100 --model pix2pix --num_test 1000
+python3 /work/re-blocking/pytorch-CycleGAN-and-pix2pix/test.py --dataroot /work/re-blocking/data/nc-charlotte --checkpoints_dir /work/re-blocking/checkpoints --results_dir /work/re-blocking/results --name ny-manhattan-p2p-200-150-v100 --model pix2pix --num_test 1000
