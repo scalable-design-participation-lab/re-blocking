@@ -1,12 +1,11 @@
 #!/bin/bash
 #SBATCH --nodes=1
-#SBATCH --time=2:00:00
+#SBATCH --time=0:15:00
 #SBATCH --job-name=test-nc-c-v100
 #SBATCH --partition=gpu
 #SBATCH --gres=gpu:v100-sxm2:1
-##SBATCH --gres=gpu:a100:1
-#SBATCH --cpus-per-task=4
-#SBATCH --mem=10GB
+#SBATCH --cpus-per-task=2
+#SBATCH --mem=4GB
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=l.schrage@northeastern.edu
 
