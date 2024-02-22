@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --nodes=1
 #SBATCH --time=0:15:00
-#SBATCH --job-name=test-nc-c-gpu
+#SBATCH --job-name=test-nc-c-b-v100
 #SBATCH --partition=gpu
 #SBATCH --gres=gpu:v100-sxm2:1
 #SBATCH --cpus-per-task=2
