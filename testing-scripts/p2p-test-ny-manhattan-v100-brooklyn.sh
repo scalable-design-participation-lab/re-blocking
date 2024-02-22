@@ -4,7 +4,7 @@
 #SBATCH --job-name=test-ny-m-gpu
 #SBATCH --partition=gpu
 ##SBATCH --gres=gpu:v100-sxm2:1
-#SBATCH --gres=gpu
+#SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=2
 #SBATCH --mem=4GB
 #SBATCH --mail-type=ALL
