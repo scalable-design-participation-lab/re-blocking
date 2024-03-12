@@ -1,10 +1,9 @@
 #!/bin/bash
 #SBATCH --nodes=1
 #SBATCH --time=8:00:00
-#SBATCH --job-name=train-ny-m-p2p-v100
+#SBATCH --job-name=train-pa-p-p2p-v100
 #SBATCH --partition=gpu
 #SBATCH --gres=gpu:v100-sxm2:1
-##SBATCH --gres=gpu:a100:1
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=32GB
 #SBATCH --mail-type=ALL
