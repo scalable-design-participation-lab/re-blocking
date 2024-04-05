@@ -1,5 +1,6 @@
 """
 Million Neighborhoods `Re-Blocking`
+A library for generating and validating parcel data for informal settlements
 """
 
 class Parcels:
