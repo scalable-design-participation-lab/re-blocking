@@ -1,14 +1,9 @@
 # import libraries
-import matplotlib.pyplot as plt
-import cartopy.crs as ccrs
-from cartopy.io.img_tiles import MapboxTiles
 import geopandas as gpd
 import os
 from dotenv import load_dotenv
-load_dotenv() # loads .env file from main folder for Mapbox API key and local project path
+load_dotenv(override=True) # loads .env file from main folder for Mapbox API key and local project path
 import random
-import numpy as np
-import shapely
 
 from helper import *
 
@@ -19,10 +14,11 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='This is a script to generate two image datasets, parcel_images and one for building_images, from the respective shp or geoJSON data.')
 
     # Add command-line arguments
-    parser.add_argument("--buildings_path", help ='Path to buildings (shapefile or geoJSON)', type=str, required=True)
-    parser.add_argument("--parcels_path", help ='Path to parcels (shapefile or geoJSON)', type=str, required=True)
-    parser.add_argument("--blocks_path", help ='Path to blocks (shapefile or geoJSON)', type=str, required=False, default=None)
-    parser.add_argument("--split_buildings", help ='Whether to split buildings', type=bool, required=True, default=True)
+    parser.add_argument("--buildings_path", help ='Path to buildings (shapefile or geoJSON)', type=str, required=False, default='./data/AlleghenyCounty_Footprints.geojson')
+    parser.add_argument("--parcels_path", help ='Path to parcels (shapefile or geoJSON)', type=str, required=False, default='./data/AlleghenyCounty_Parcels.geojson')
+    parser.add_argument("--blocks_path", help ='Path to blocks (shapefile or geoJSON)', type=str, required=False, default='./data/blocks')
+    parser.add_argument("--split_buildings", help ='Whether to split buildings', type=bool, required=False, default=False)
+    parser.add_argument("--load_split_buildings", help ='Whether to load split buildings', type=bool, required=False, default=True)
     parser.add_argument("--threshold_high", help = (
             "A decimal value between 0 and 1 representing the high building-parcel overlap threshold. "
             "If the ratio of building area in a parcel to the total building area is greater than or "
@@ -32,18 +28,16 @@ if __name__ == "__main__":
             "If the ratio of building area in a parcel to the total building area is less than or "
             "equal to the specified threshold, the overlap is considered insignificant and will "
             "be overlooked."),type=float, default = 0.15, required=False)
-    parser.add_argument("--buildings_w_parcels_path", help ='buildings_with_parcels_path', type=str, required=True) # to save shp
-    parser.add_argument("--parcel_images_directory", help ='parcel_images_directory', type=str, required=True)
-    parser.add_argument("--buildings_images_directory", help ='buildings_images_directory', type=str, required=True)
-    parser.add_argument("--number_of_images", help ='number_of_images', type=int, default = 25000, required=True)
-    
+    parser.add_argument("--buildings_w_parcels_path", help ='buildings_with_parcels_path', type=str, required=False, default = './buildings_processed') # to save shp
+    parser.add_argument("--parcel_images_directory", help ='parcel_images_directory', type=str, required=False, default = './parcels_test/') 
+    parser.add_argument("--buildings_images_directory", help ='buildings_images_directory', type=str, required=False, default = './buildings_test/') 
+    parser.add_argument("--number_of_images", help ='number_of_images', type=int, default = 10, required=False)
     
     # create dataset_specs folder
     try:
         os.mkdir('./dataset_specs')
     except:
         pass
-    
     
     # retrieve arguments
     args = parser.parse_args()
@@ -57,6 +51,7 @@ if __name__ == "__main__":
     number_of_images = args.number_of_images
     blocks_path = args.blocks_path
     split_buildings = args.split_buildings
+    load_split_buildings = args.load_split_buildings
     
     # read dataframes
     df_parcels = gpd.read_file(parcels_path).to_crs(epsg=3857)
@@ -78,11 +73,25 @@ if __name__ == "__main__":
         # Spatial join to restrict parcels to those within blocks
         df_parcels = gpd.sjoin(df_parcels, df_blocks, op='within')
         try:
-            df_parcels.drop(columns = ['index_left','index_right'], inplace=True)
+            df_parcels.drop(columns = ['index_left'], inplace=True)
+        except:
+            pass
+        try:
+            df_parcels.drop(columns = ['index_right'], inplace=True)
+        except:
+            pass
+        try:
+            df_blocks.drop(columns = ['index_left'], inplace=True)
+        except:
+            pass
+        try:
+            df_blocks.drop(columns = ['index_right'], inplace=True)
         except:
             pass
         # Reset the index of the resulting DataFrame
         df_parcels.reset_index(inplace=True, drop=True)
+        df_buildings.reset_index(inplace=True, drop=True)
+        df_blocks.reset_index(inplace=True, drop=True)
         
     # add building id and parcel id
     df_buildings['building_id'] = [i for i in range(len(df_buildings))]
@@ -96,11 +105,12 @@ if __name__ == "__main__":
     #Find buildings that belong to more than one parcel
     buildings_with_multiple_parcels = building_counts[building_counts > 1].index.tolist()
    
-    
     # split buildings based on the provided thresholds
     if split_buildings:
         buildings_with_parcel_info_new = split_building(buildings_with_multiple_parcels, buildings_with_parcel_info, df_buildings, df_parcels, 
                    threshold_high = threshold_high, threshold_low = threshold_low, buildings_clean_path = buildings_w_parcels_path)
+    elif load_split_buildings:    
+        buildings_with_parcel_info_new = gpd.read_file(buildings_w_parcels_path).to_crs(epsg=3857)
     else:
         buildings_with_parcel_info_new = buildings_with_parcel_info.copy()
         
@@ -115,7 +125,6 @@ if __name__ == "__main__":
     # Save final shp with colors
     buildings_with_parcel_info_new.to_file(buildings_w_parcels_path, driver='ESRI Shapefile')
     
-    
     ################ IMAGE DATASETS GENERATION ################ 
     # Create directories to save images names
     try:
@@ -128,12 +137,12 @@ if __name__ == "__main__":
         pass
     
     # shuffle building indices - image index will correspond to the parcel index in the dataframe
-    indices_to_print = range(buildings_with_parcel_info_new.shape[0])
+    indices_to_print = [i for i in range(buildings_with_parcel_info_new.shape[0])]
     random.shuffle(indices_to_print)
     count = 0 
     print('Generating images...')
-    try:
-        for i in indices_to_print:
+    for i in indices_to_print:
+        try:
             if count % 1000 == 0:
                 print(count+' images completed out of '+str(number_of_images))
             subset_features = subset(df_parcels, buildings_with_parcel_info_new, i, 200)
@@ -142,8 +151,8 @@ if __name__ == "__main__":
             count = count + 1
             if count == number_of_images:
                 break
-    except:
-        print("Error at index: ",i)
+        except:
+            print("Error at index: ",i)
         
     print('Done!')
         

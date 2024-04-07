@@ -124,8 +124,8 @@ def split_building(buildings_with_multiple_parcels, buildings_with_parcel_info, 
     print("Iterate through buildings in multiple parcels and split them. Splitting...")
     for building_id in tqdm(buildings_with_multiple_parcels):
         # Print progress every 1000 buildings
-        if count % 1000 == 0:
-            print(count)
+        # if count % 1000 == 0:
+        #     print(count)
         
         # Increment the counter
         count += 1
@@ -205,6 +205,23 @@ def generate_dataset_specs(buildings_with_parcel_info, buildings_with_parcel_inf
     buildings_after = buildings_with_parcel_info_new.shape[0]
     number_of_parcels = df_parcels.shape[0]
     
+    try:
+        df_parcels.drop(columns = ['index_left'], inplace=True)
+    except:
+        pass
+    try:
+        df_parcels.drop(columns = ['index_right'], inplace=True)
+    except:
+        pass
+    try:
+        buildings_with_parcel_info_new.drop(columns = ['index_left'], inplace=True)
+    except:
+        pass
+    try:
+        buildings_with_parcel_info_new.drop(columns = ['index_right'], inplace=True)
+    except:
+        pass
+       
     # Spatial join to associate each building with a parcel
     joined_df = gpd.sjoin(buildings_with_parcel_info_new, df_parcels, op='within', how='left')
     
@@ -226,7 +243,6 @@ def generate_dataset_specs(buildings_with_parcel_info, buildings_with_parcel_inf
     plt.ylabel('Number of Parcels')
     plt.grid(True)
     plt.savefig('./dataset_specs/parcel_area_distribution.png', dpi=300)
-    plt.show()
     
     # Generate descriptive statistics for the 'area' column
     area_description = df_parcels['area'].describe()
