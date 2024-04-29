@@ -1,0 +1,15 @@
+#!/bin/bash
+#SBATCH --nodes=1
+#SBATCH --time=0:15:00
+#SBATCH --job-name=test-pa-p-b-v100
+#SBATCH --partition=gpu
+#SBATCH --gres=gpu:v100-sxm2:1
+#SBATCH --cpus-per-task=2
+#SBATCH --mem=4GB
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=l.schrage@northeastern.edu
+
+module load anaconda3/2022.05 cuda/11.8
+source activate /home/l.schrage/.conda/envs/re-blocking_env
+
+python3 /work/re-blocking/pytorch-CycleGAN-and-pix2pix/test.py --dataroot /work/re-blocking/data/ny-brooklyn --checkpoints_dir /work/re-blocking/checkpoints --results_dir /work/re-blocking/results --name pa-pittsburgh-p2p-500-150-v100 --model pix2pix --num_test 1000
