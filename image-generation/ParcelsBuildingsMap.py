@@ -7,6 +7,10 @@ import geopandas as gpd
 import os
 from dotenv import load_dotenv
 import random
+from urllib.request import urlopen
+from PIL import Image
+import numpy as np
+from owslib.wms import WebMapService
 
 """
 This module provides functionality for mapping parcels and buildings using various data sources and visualization methods.
@@ -199,6 +203,126 @@ class ParcelBuildingMapper:
         plt.savefig(os.path.join(output_folder, f'{feature_type}_{index}.jpg'), bbox_inches='tight', pad_inches=0, dpi=96)
         plt.close(fig)
 
+    def map_maker_nasa_gibs_rest(self, df_parcels, df_buildings, bounds, index, scale=10, feature_type='both', random_color=False, output_folder=''):
+        """
+        Create a map using NASA GIBS REST API for satellite imagery as a base layer.
+
+        This method generates a map using a single tile from the NASA GIBS REST API as the base layer,
+        and overlays parcel and/or building data on top of it.
+
+        Args:
+            df_parcels (GeoDataFrame): GeoDataFrame containing parcel data.
+            df_buildings (GeoDataFrame): GeoDataFrame containing building data.
+            bounds (tuple): Bounding box for the map (minx, miny, maxx, maxy).
+            index (int): Index for the output filename.
+            scale (int, optional): Zoom level for the satellite imagery. Defaults to 10.
+            feature_type (str, optional): Type of features to display ('parcels', 'buildings', or 'both'). Defaults to 'both'.
+            random_color (bool, optional): Whether to use random colors for features. Defaults to False.
+            output_folder (str, optional): Folder to save the output image. Defaults to ''.
+
+        Returns:
+            None
+
+        Note:
+            This method saves the generated map as a JPEG file in the specified output folder.
+            The filename format is '{feature_type}_{index}.jpg'.
+        """
+
+        crs_epsg = ccrs.epsg(str(self.epsg))
+        
+        layer = "MODIS_Terra_CorrectedReflectance_TrueColor"
+        date = "2020-03-01"  # Example date, adjust as necessary
+        zoom_level = 6  # Zoom level
+        tile_row = 10  # Tile row
+        tile_col = 21  # Tile column
+        tile_url = f"https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/{layer}/default/{date}/GoogleMapsCompatible_Level9/{zoom_level}/{tile_row}/{tile_col}.jpg"
+        
+        fig = plt.figure(figsize=(8, 8))
+        ax = fig.add_subplot(1, 1, 1, projection=ccrs.Mercator())
+
+        dist1 = bounds[2] - bounds[0]
+        dist2 = bounds[3] - bounds[1]
+        max_dist = max(dist1, dist2) / 2
+        centroid_x = (bounds[2] + bounds[0]) / 2
+        centroid_y = (bounds[3] + bounds[1]) / 2
+
+        ax.set_extent([centroid_x-max_dist, centroid_x+max_dist, centroid_y-max_dist, centroid_y+max_dist], crs=crs_epsg)
+
+        with urlopen(tile_url) as url:
+            img = Image.open(url)
+            img_array = np.array(img)
+        img_extent = [-130, -100, 20, 50]  # Adjust this extent to match the tile's coverage
+        ax.imshow(img_array, origin='upper', extent=img_extent, transform=ccrs.PlateCarree())
+        
+        if feature_type in ['parcels', 'both']:
+            self.add_geometries(ax, df_parcels, crs_epsg, random_color)
+        if feature_type in ['buildings', 'both']:
+            self.add_geometries(ax, df_buildings, crs_epsg, random_color)
+
+        if not os.path.exists(output_folder):
+            os.makedirs(output_folder)
+        plt.savefig(os.path.join(output_folder, f'{feature_type}_{index}.jpg'), bbox_inches='tight', pad_inches=0)
+        plt.close(fig)
+
+    def map_maker_nasa_gibs_wms(self, df_parcels, df_buildings, bounds, index, scale=10, feature_type='both', random_color=False, output_folder=''):
+        """
+        Create a map using NASA GIBS Web Map Service (WMS) for satellite imagery as a base layer.
+
+        This method generates two maps:
+        1. A base map using the NASA GIBS WMS satellite imagery.
+        2. An overlay map with parcel and/or building data on top of the satellite imagery.
+
+        Args:
+            df_parcels (GeoDataFrame): GeoDataFrame containing parcel data.
+            df_buildings (GeoDataFrame): GeoDataFrame containing building data.
+            bounds (tuple): Bounding box for the map (minx, miny, maxx, maxy).
+            index (int): Index for the output filename.
+            scale (int, optional): Zoom level for the satellite imagery. Defaults to 10.
+            feature_type (str, optional): Type of features to display ('parcels', 'buildings', or 'both'). Defaults to 'both'.
+            random_color (bool, optional): Whether to use random colors for features. Defaults to False.
+            output_folder (str, optional): Folder to save the output images. Defaults to ''.
+
+        Returns:
+            None
+
+        Note:
+            This method saves two JPEG files in the specified output folder:
+            1. '{feature_type}_{index}.jpg': The base satellite image.
+            2. '{feature_type}_{index}_with_features.jpg': The satellite image with overlaid features.
+        """
+
+        wms = WebMapService('https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?', version='1.1.1')
+
+        img = wms.getmap(layers=['MODIS_Terra_CorrectedReflectance_TrueColor'],
+                        srs='epsg:4326',
+                        bbox=(-180,-90,180,90),
+                        size=(1200, 600),
+                        time='2024-01-01',
+                        format='image/jpeg',
+                        transparent=False)
+
+        if not os.path.exists(output_folder):
+            os.makedirs(output_folder)
+        out = open(os.path.join(output_folder, f'{feature_type}_{index}.jpg'), 'wb')
+        out.write(img.read())
+        out.close()
+
+        fig, ax = plt.subplots(figsize=(12, 6))
+        img = Image.open(os.path.join(output_folder, f'{feature_type}_{index}.jpg'))
+        ax.imshow(img)
+
+        if feature_type in ['parcels', 'both']:
+            df_parcels.plot(ax=ax, facecolor='none', edgecolor='red', linewidth=0.5)
+        if feature_type in ['buildings', 'both']:
+            df_buildings.plot(ax=ax, facecolor='none', edgecolor='blue', linewidth=0.5)
+
+        ax.set_xlim(0, 1200)
+        ax.set_ylim(600, 0)
+        ax.axis('off')
+
+        plt.savefig(os.path.join(output_folder, f'{feature_type}_{index}_with_features.jpg'), bbox_inches='tight', pad_inches=0)
+        plt.close(fig)
+    
     def subset(self, df, df_buildings, index, distance=75):
         """
         Create a subset of the data based on a buffer around a selected feature.
@@ -231,7 +355,19 @@ class ParcelBuildingMapper:
             start_index (int, optional): Starting index for map generation. Defaults to 0.
             end_index (int, optional): Ending index for map generation. Defaults to 10.
             distance (float, optional): Buffer distance in meters for subsetting. Defaults to 75.
-            map_type (str, optional): Type of map to generate ('mapbox_satellite' or 'simple'). Defaults to 'mapbox_satellite'.
+            map_type (str, optional): Type of map to generate. Defaults to 'mapbox_satellite'.
+                Supported types:
+                - 'mapbox_satellite': Uses Mapbox satellite imagery.
+                - 'simple': Creates a simple map without satellite imagery.
+                - 'nasa_gibs_rest': Uses NASA GIBS REST API for satellite imagery.
+                - 'nasa_gibs_wms': Uses NASA GIBS WMS for satellite imagery.
+
+        Raises:
+            ValueError: If an unsupported map type is specified.
+
+        Note:
+            This method generates multiple maps based on the specified parameters and map type.
+            The output files are saved in the provided output folders.
         """
         
         for i in range(start_index, end_index):
@@ -243,6 +379,10 @@ class ParcelBuildingMapper:
             elif map_type == 'simple':
                 self.map_maker_simple(subset_features[0], subset_features[1], subset_features[2], i, 'buildings', output_folder=buildings_output_path)
                 self.map_maker_simple(subset_features[0], subset_features[1], subset_features[2], i, 'parcels', output_folder=parcels_output_path)
+            elif map_type == 'nasa_gibs_rest':
+                self.map_maker_nasa_gibs_rest(subset_features[0], subset_features[1], subset_features[2], i, 18, 'both', output_folder=buildings_output_path)
+            elif map_type == 'nasa_gibs_wms':
+                self.map_maker_nasa_gibs_wms(subset_features[0], subset_features[1], subset_features[2], i, 18, 'both', output_folder=buildings_output_path)
             else:
                 raise ValueError(f"Unsupported map type: {map_type}")
         plt.close('all')
@@ -257,7 +397,13 @@ if __name__ == "__main__":
     
     # Generate maps using Mapbox satellite imagery
     mapper.generate_maps(parcels_output_path, buildings_output_path, start_index=0, end_index=5, distance=200, map_type='mapbox_satellite')
+
+    # Generate maps using NASA GIBS REST API
+    mapper.generate_maps(parcels_output_path, buildings_output_path, start_index=10, end_index=15, distance=200, map_type='nasa_gibs_rest')
     
     # Generate simple maps without satellite imagery
     mapper.generate_maps(parcels_output_path, buildings_output_path, start_index=5, end_index=10, distance=200, map_type='simple')
+
+    # Generate maps using NASA GIBS WMS
+    mapper.generate_maps(parcels_output_path, buildings_output_path, start_index=15, end_index=20, distance=200, map_type='nasa_gibs_wms')
     
