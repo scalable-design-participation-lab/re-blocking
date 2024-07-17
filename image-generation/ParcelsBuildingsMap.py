@@ -336,6 +336,7 @@ class ParcelBuildingMapper:
                 self.map_maker_simple(subset_features[0], subset_features[1], subset_features[2], i, 'parcels', output_folder=parcels_output_path)
             else:
                 raise ValueError(f"Unsupported map type: {map_type}")
+        plt.close('all')
 
 if __name__ == "__main__":
     parcels_path = "C:/Million Neighborhoods/Spatial Data/ny-manhattan-parcels/NYC_2021_Tax_Parcels_SHP_2203/NewYork_2021_Tax_Parcels_SHP_2203.shp"
@@ -351,4 +352,3 @@ if __name__ == "__main__":
     # Generate simple maps without satellite imagery
     mapper.generate_maps(parcels_output_path, buildings_output_path, start_index=5, end_index=10, distance=200, map_type='simple')
     
-    plt.close('all')
