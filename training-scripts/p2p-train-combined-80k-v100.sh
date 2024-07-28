@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --nodes=1
 #SBATCH --time=8:00:00
-#SBATCH --job-name=train-comb-p2p-v100
+#SBATCH --job-name=train-comb-80k-p2p-v100
 #SBATCH --partition=gpu
 #SBATCH --gres=gpu:v100-sxm2:1
 #SBATCH --cpus-per-task=4
