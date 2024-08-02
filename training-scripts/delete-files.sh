@@ -9,7 +9,7 @@
 #SBATCH --mail-user=l.schrage@northeastern.edu
 
 # Change to your target directory
-cd /work/re-blocking/data/all-cities-20k
+cd /work/re-blocking/data/all-cities-20k/train
 
 # Initialize a counter
 counter=0
