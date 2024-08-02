@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --nodes=1
 #SBATCH --time=8:00:00
-#SBATCH --job-name=reuce-files
+#SBATCH --job-name=reduce-files
 #SBATCH --partition=short
 #SBATCH --cpus-per-task=16
 #SBATCH --mem=128GB
