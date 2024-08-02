@@ -20,7 +20,7 @@ for file in *; do
   if [ -f "$file" ]; then
     counter=$((counter + 1))
     # Delete every 4th file
-    if [ $((counter % 4)) -eq 0 ]; then
+    if [ $((counter % 2)) -eq 0 ]; then
       echo "Deleting: $file"
       rm "$file"
     fi
