@@ -1,4 +1,12 @@
 #!/bin/bash
+#SBATCH --nodes=1
+#SBATCH --time=8:00:00
+#SBATCH --job-name=delete-files
+#SBATCH --partition=cpu
+#SBATCH --cpus-per-task=4
+#SBATCH --mem=32GB
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=l.schrage@northeastern.edu
 
 # Change to your target directory
 cd /work/re-blocking/data/all-cities-20k
