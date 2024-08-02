@@ -2,9 +2,9 @@
 #SBATCH --nodes=1
 #SBATCH --time=8:00:00
 #SBATCH --job-name=delete-files
-#SBATCH --partition=cpu
-#SBATCH --cpus-per-task=4
-#SBATCH --mem=32GB
+#SBATCH --partition=short
+#SBATCH --cpus-per-task=16
+#SBATCH --mem=128GB
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=l.schrage@northeastern.edu
 
