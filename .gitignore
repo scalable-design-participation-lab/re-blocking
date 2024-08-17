@@ -199,4 +199,4 @@ scripts/
 
 # test data and output
 data/
-models/
+ensemble-model/vae-output/*
