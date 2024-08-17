@@ -197,3 +197,6 @@ scripts/
 # Jupyter Notebook checkpoints
 .ipynb_checkpoints
 
+# test data and output
+data/
+models/
