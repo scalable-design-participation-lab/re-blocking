@@ -200,3 +200,5 @@ scripts/
 # test data and output
 data/
 ensemble-model/vae-output/*
+ensemble-model/diffusion-output/*
+ensemble-model/softmax-output/*
