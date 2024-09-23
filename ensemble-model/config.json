@@ -1,0 +1,21 @@
+{
+  "batch_size": 16,
+  "learning_rate": 1e-4,
+  "num_epochs": 3,
+  "checkpoint_interval": 25,
+  "max_images_per_class": 20,
+  "resnet_model": "ResNet18",
+  "class_names": ["Boston", "Charlotte", "Manhattan", "Pittsburgh"],
+  "num_classes": 4,
+  "folders": {
+    "Boston": "../data/ma-boston/buildings",
+    "Charlotte": "../data/nc-charlotte/buildings",
+    "Manhattan": "../data/ny-manhattan/buildings",
+    "Pittsburgh": "../data/pa-pittsburgh/buildings"
+  },
+  "output_folder": "softmax-output",
+  "new_image_path": "../data/ny-brooklyn/buildings/buildings_1370.jpg",
+  "normalize_mean": [0.485, 0.456, 0.406],
+  "normalize_std": [0.229, 0.224, 0.225],
+  "weight_decay": 1e-4
+}
