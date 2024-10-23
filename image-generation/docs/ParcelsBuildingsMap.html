@@ -1,0 +1,714 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.1">
+<title>ParcelsBuildingsMap API documentation</title>
+<meta name="description" content="">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>ParcelsBuildingsMap</code></h1>
+</header>
+<section id="section-intro">
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="ParcelsBuildingsMap.ParcelBuildingMapper"><code class="flex name class">
+<span>class <span class="ident">ParcelBuildingMapper</span></span>
+<span>(</span><span>parcels_path, buildings_path, epsg=3857)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A class for mapping parcels and buildings using various data sources and visualization methods.</p>
+<p>This class provides methods for loading geospatial data, processing it, and creating visualizations
+of parcels and buildings using different mapping techniques.</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>parcels_path</code></strong> :&ensp;<code>str</code></dt>
+<dd>Path to the parcels shapefile.</dd>
+<dt><strong><code>buildings_path</code></strong> :&ensp;<code>str</code></dt>
+<dd>Path to the buildings shapefile.</dd>
+<dt><strong><code>epsg</code></strong> :&ensp;<code>int</code></dt>
+<dd>EPSG code for the coordinate reference system (default is 3857).</dd>
+<dt><strong><code>df_parcels</code></strong> :&ensp;<code>GeoDataFrame</code></dt>
+<dd>GeoDataFrame containing parcel data.</dd>
+<dt><strong><code>df_buildings</code></strong> :&ensp;<code>GeoDataFrame</code></dt>
+<dd>GeoDataFrame containing building data.</dd>
+<dt><strong><code>df_parcels_buildings</code></strong> :&ensp;<code>GeoDataFrame</code></dt>
+<dd>GeoDataFrame containing joined parcel and building data.</dd>
+</dl>
+<p>Initialize the ParcelBuildingMapper with paths to parcel and building data.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>parcels_path</code></strong> :&ensp;<code>str</code></dt>
+<dd>Path to the parcels shapefile.</dd>
+<dt><strong><code>buildings_path</code></strong> :&ensp;<code>str</code></dt>
+<dd>Path to the buildings shapefile.</dd>
+<dt><strong><code>epsg</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>EPSG code for the coordinate reference system. Defaults to 3857.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ParcelBuildingMapper:
+    &#34;&#34;&#34;
+    A class for mapping parcels and buildings using various data sources and visualization methods.
+
+    This class provides methods for loading geospatial data, processing it, and creating visualizations
+    of parcels and buildings using different mapping techniques.
+
+    Attributes:
+        parcels_path (str): Path to the parcels shapefile.
+        buildings_path (str): Path to the buildings shapefile.
+        epsg (int): EPSG code for the coordinate reference system (default is 3857).
+        df_parcels (GeoDataFrame): GeoDataFrame containing parcel data.
+        df_buildings (GeoDataFrame): GeoDataFrame containing building data.
+        df_parcels_buildings (GeoDataFrame): GeoDataFrame containing joined parcel and building data.
+
+    &#34;&#34;&#34;
+     
+    def __init__(self, parcels_path, buildings_path, epsg=3857):
+        &#34;&#34;&#34;
+        Initialize the ParcelBuildingMapper with paths to parcel and building data.
+
+        Args:
+            parcels_path (str): Path to the parcels shapefile.
+            buildings_path (str): Path to the buildings shapefile.
+            epsg (int, optional): EPSG code for the coordinate reference system. Defaults to 3857.
+        &#34;&#34;&#34;
+
+        load_dotenv()
+        self.parcels_path = parcels_path
+        self.buildings_path = buildings_path
+        self.epsg = epsg
+        self.df_parcels = None
+        self.df_buildings = None
+        self.df_parcels_buildings = None
+        self.load_data()
+
+    def load_data(self):
+        &#34;&#34;&#34;
+        Load parcel and building data from shapefiles and prepare it for mapping.
+
+        This method reads the shapefile data, transforms it to the specified coordinate system,
+        assigns random colors to parcels, and joins the parcel and building data.
+        &#34;&#34;&#34;
+
+        self.df_parcels = gpd.read_file(self.parcels_path)
+        self.df_buildings = gpd.read_file(self.buildings_path)
+        
+        self.df_parcels = self.df_parcels.to_crs(epsg=self.epsg)
+        self.df_buildings = self.df_buildings.to_crs(epsg=self.epsg)
+        
+        self.df_parcels[&#39;color&#39;] = [self.random_hex_color() for _ in range(len(self.df_parcels))]
+        self.df_parcels_buildings = self.join_parcels_buildings(self.df_parcels, self.df_buildings)
+
+    def random_hex_color(self, use_seed=False):
+        &#34;&#34;&#34;
+        Generate a random hex color code.
+
+        Args:
+            use_seed (bool, optional): Whether to use a seed for random number generation. Defaults to False.
+
+        Returns:
+            str: A randomly generated hex color code.
+        &#34;&#34;&#34;
+
+        if use_seed:
+            random.seed(use_seed)
+            r = random.randint(0, 255)
+            random.seed(use_seed+1000)
+            g = random.randint(0, 255)
+            random.seed(use_seed+2000)
+            b = random.randint(0, 255)
+        else:
+            r = random.randint(0, 255)
+            g = random.randint(0, 255)
+            b = random.randint(0, 255)
+        return &#34;#{:02x}{:02x}{:02x}&#34;.format(r, g, b)
+
+    def join_parcels_buildings(self, parcels, buildings):
+        &#34;&#34;&#34;
+        Join parcel and building data based on spatial relationship.
+
+        Args:
+            parcels (GeoDataFrame): GeoDataFrame containing parcel data.
+            buildings (GeoDataFrame): GeoDataFrame containing building data.
+
+        Returns:
+            GeoDataFrame: A GeoDataFrame containing joined parcel and building data.
+        &#34;&#34;&#34;
+
+        return buildings.sjoin(parcels, how=&#34;inner&#34;)
+
+    def add_geometries(self, ax, df_parcels, crs_epsg, random_color=False):
+        &#34;&#34;&#34;
+        Add geometries to the given axes object.
+
+        Args:
+            ax (GeoAxesSubplot): The axes object to add geometries to.
+            df_parcels (GeoDataFrame): GeoDataFrame containing parcel data.
+            crs_epsg (CRS): Coordinate reference system for the geometries.
+            random_color (bool, optional): Whether to use random colors. Defaults to False.
+        &#34;&#34;&#34;
+
+        for row in df_parcels.itertuples():
+            geometry = row.geometry
+            if random_color:
+                color = self.random_hex_color(int(row.bin))
+            else:
+                color = row.color
+            ax.add_geometries(geometry, crs=crs_epsg, facecolor=color)
+
+    def map_maker_mapbox_satellite(self, df_parcels, df_buildings, bounds, index, scale=10, feature_type=&#39;both&#39;, random_color=False, output_folder=&#39;&#39;):
+        &#34;&#34;&#34;
+        Create a map using Mapbox satellite imagery as a base layer.
+
+        Args:
+            df_parcels (GeoDataFrame): GeoDataFrame containing parcel data.
+            df_buildings (GeoDataFrame): GeoDataFrame containing building data.
+            bounds (tuple): Bounding box for the map (minx, miny, maxx, maxy).
+            index (int): Index for the output filename.
+            scale (int, optional): Zoom level for the satellite imagery. Defaults to 10.
+            feature_type (str, optional): Type of features to display (&#39;parcels&#39;, &#39;buildings&#39;, or &#39;both&#39;). Defaults to &#39;both&#39;.
+            random_color (bool, optional): Whether to use random colors. Defaults to False.
+            output_folder (str, optional): Folder to save the output image. Defaults to &#39;&#39;.
+        &#34;&#34;&#34;
+
+        access_token = os.environ.get(&#39;MAPBOX_ACCESS_TOKEN&#39;)
+        tiler = MapboxTiles(access_token, &#39;satellite-v9&#39;)
+        crs_epsg = ccrs.epsg(str(self.epsg))
+        mercator = tiler.crs
+
+        fig = plt.figure(figsize=(7, 7), dpi=96)
+        ax = fig.add_subplot(1, 1, 1, projection=mercator)
+
+        dist1 = bounds[2] - bounds[0]
+        dist2 = bounds[3] - bounds[1]
+        max_dist = max(dist1, dist2) / 2
+        centroid_x = (bounds[2] + bounds[0]) / 2
+        centroid_y = (bounds[3] + bounds[1]) / 2
+
+        ax.set_extent([centroid_x-max_dist, centroid_x+max_dist, centroid_y-max_dist, centroid_y+max_dist], crs=crs_epsg)
+
+        if feature_type in [&#39;parcels&#39;, &#39;both&#39;]:
+            self.add_geometries(ax, df_parcels, crs_epsg, random_color)
+        if feature_type in [&#39;buildings&#39;, &#39;both&#39;]:
+            self.add_geometries(ax, df_buildings, crs_epsg, random_color)
+
+        ax.add_image(tiler, scale)
+
+        if not os.path.exists(output_folder):
+            os.makedirs(output_folder)
+
+        plt.savefig(os.path.join(output_folder, f&#39;{feature_type}_{index}.jpg&#39;), bbox_inches=&#39;tight&#39;, pad_inches=0, dpi=96)
+        plt.close(fig)
+
+    def map_maker_simple(self, df_parcels, df_buildings, bounds, index, feature_type=&#39;both&#39;, random_color=False, output_folder=&#39;&#39;):
+        &#34;&#34;&#34;
+        Create a simple map without satellite imagery.
+
+        Args:
+            df_parcels (GeoDataFrame): GeoDataFrame containing parcel data.
+            df_buildings (GeoDataFrame): GeoDataFrame containing building data.
+            bounds (tuple): Bounding box for the map (minx, miny, maxx, maxy).
+            index (int): Index for the output filename.
+            feature_type (str, optional): Type of features to display (&#39;parcels&#39;, &#39;buildings&#39;, or &#39;both&#39;). Defaults to &#39;both&#39;.
+            random_color (bool, optional): Whether to use random colors. Defaults to False.
+            output_folder (str, optional): Folder to save the output image. Defaults to &#39;&#39;.
+        &#34;&#34;&#34;
+
+        fig, ax = plt.subplots(figsize=(7, 7))
+        
+        if feature_type in [&#39;parcels&#39;, &#39;both&#39;]:
+            df_parcels.plot(ax=ax, facecolor=df_parcels[&#39;color&#39;], edgecolor=&#39;black&#39;, linewidth=0.5)
+        if feature_type in [&#39;buildings&#39;, &#39;both&#39;]:
+            df_buildings.plot(ax=ax, facecolor=&#39;red&#39;, edgecolor=&#39;black&#39;, linewidth=0.5)
+        
+        ax.set_xlim(bounds[0], bounds[2])
+        ax.set_ylim(bounds[1], bounds[3])
+        ax.axis(&#39;off&#39;)
+        
+        if not os.path.exists(output_folder):
+            os.makedirs(output_folder)
+        
+        plt.savefig(os.path.join(output_folder, f&#39;{feature_type}_{index}.jpg&#39;), bbox_inches=&#39;tight&#39;, pad_inches=0, dpi=96)
+        plt.close(fig)
+
+    def map_maker_nasa_gibs_rest(self, df_parcels, df_buildings, bounds, index, scale=10, feature_type=&#39;both&#39;, random_color=False, output_folder=&#39;&#39;):
+        &#34;&#34;&#34;
+        Create a map using NASA GIBS REST API for satellite imagery as a base layer.
+
+        This method generates a map using a single tile from the NASA GIBS REST API as the base layer,
+        and overlays parcel and/or building data on top of it.
+
+        Args:
+            df_parcels (GeoDataFrame): GeoDataFrame containing parcel data.
+            df_buildings (GeoDataFrame): GeoDataFrame containing building data.
+            bounds (tuple): Bounding box for the map (minx, miny, maxx, maxy).
+            index (int): Index for the output filename.
+            scale (int, optional): Zoom level for the satellite imagery. Defaults to 10.
+            feature_type (str, optional): Type of features to display (&#39;parcels&#39;, &#39;buildings&#39;, or &#39;both&#39;). Defaults to &#39;both&#39;.
+            random_color (bool, optional): Whether to use random colors for features. Defaults to False.
+            output_folder (str, optional): Folder to save the output image. Defaults to &#39;&#39;.
+
+        Returns:
+            None
+
+        Note:
+            This method saves the generated map as a JPEG file in the specified output folder.
+            The filename format is &#39;{feature_type}_{index}.jpg&#39;.
+        &#34;&#34;&#34;
+
+        crs_epsg = ccrs.epsg(str(self.epsg))
+        
+        layer = &#34;MODIS_Terra_CorrectedReflectance_TrueColor&#34;
+        date = &#34;2020-03-01&#34;  # Example date, adjust as necessary
+        zoom_level = 6  # Zoom level
+        tile_row = 10  # Tile row
+        tile_col = 21  # Tile column
+        tile_url = f&#34;https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/{layer}/default/{date}/GoogleMapsCompatible_Level9/{zoom_level}/{tile_row}/{tile_col}.jpg&#34;
+        
+        fig = plt.figure(figsize=(8, 8))
+        ax = fig.add_subplot(1, 1, 1, projection=ccrs.Mercator())
+
+        dist1 = bounds[2] - bounds[0]
+        dist2 = bounds[3] - bounds[1]
+        max_dist = max(dist1, dist2) / 2
+        centroid_x = (bounds[2] + bounds[0]) / 2
+        centroid_y = (bounds[3] + bounds[1]) / 2
+
+        ax.set_extent([centroid_x-max_dist, centroid_x+max_dist, centroid_y-max_dist, centroid_y+max_dist], crs=crs_epsg)
+
+        with urlopen(tile_url) as url:
+            img = Image.open(url)
+            img_array = np.array(img)
+        img_extent = [-130, -100, 20, 50]  # Adjust this extent to match the tile&#39;s coverage
+        ax.imshow(img_array, origin=&#39;upper&#39;, extent=img_extent, transform=ccrs.PlateCarree())
+        
+        if feature_type in [&#39;parcels&#39;, &#39;both&#39;]:
+            self.add_geometries(ax, df_parcels, crs_epsg, random_color)
+        if feature_type in [&#39;buildings&#39;, &#39;both&#39;]:
+            self.add_geometries(ax, df_buildings, crs_epsg, random_color)
+
+        if not os.path.exists(output_folder):
+            os.makedirs(output_folder)
+        plt.savefig(os.path.join(output_folder, f&#39;{feature_type}_{index}.jpg&#39;), bbox_inches=&#39;tight&#39;, pad_inches=0)
+        plt.close(fig)
+
+    def map_maker_nasa_gibs_wms(self, df_parcels, df_buildings, bounds, index, scale=10, feature_type=&#39;both&#39;, random_color=False, output_folder=&#39;&#39;):
+        &#34;&#34;&#34;
+        Create a map using NASA GIBS Web Map Service (WMS) for satellite imagery as a base layer.
+
+        This method generates two maps:
+        1. A base map using the NASA GIBS WMS satellite imagery.
+        2. An overlay map with parcel and/or building data on top of the satellite imagery.
+
+        Args:
+            df_parcels (GeoDataFrame): GeoDataFrame containing parcel data.
+            df_buildings (GeoDataFrame): GeoDataFrame containing building data.
+            bounds (tuple): Bounding box for the map (minx, miny, maxx, maxy).
+            index (int): Index for the output filename.
+            scale (int, optional): Zoom level for the satellite imagery. Defaults to 10.
+            feature_type (str, optional): Type of features to display (&#39;parcels&#39;, &#39;buildings&#39;, or &#39;both&#39;). Defaults to &#39;both&#39;.
+            random_color (bool, optional): Whether to use random colors for features. Defaults to False.
+            output_folder (str, optional): Folder to save the output images. Defaults to &#39;&#39;.
+
+        Returns:
+            None
+
+        Note:
+            This method saves two JPEG files in the specified output folder:
+            1. &#39;{feature_type}_{index}.jpg&#39;: The base satellite image.
+            2. &#39;{feature_type}_{index}_with_features.jpg&#39;: The satellite image with overlaid features.
+        &#34;&#34;&#34;
+
+        wms = WebMapService(&#39;https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?&#39;, version=&#39;1.1.1&#39;)
+
+        img = wms.getmap(layers=[&#39;MODIS_Terra_CorrectedReflectance_TrueColor&#39;],
+                        srs=&#39;epsg:4326&#39;,
+                        bbox=(-180,-90,180,90),
+                        size=(1200, 600),
+                        time=&#39;2024-01-01&#39;,
+                        format=&#39;image/jpeg&#39;,
+                        transparent=False)
+
+        if not os.path.exists(output_folder):
+            os.makedirs(output_folder)
+        out = open(os.path.join(output_folder, f&#39;{feature_type}_{index}.jpg&#39;), &#39;wb&#39;)
+        out.write(img.read())
+        out.close()
+
+        fig, ax = plt.subplots(figsize=(12, 6))
+        img = Image.open(os.path.join(output_folder, f&#39;{feature_type}_{index}.jpg&#39;))
+        ax.imshow(img)
+
+        if feature_type in [&#39;parcels&#39;, &#39;both&#39;]:
+            df_parcels.plot(ax=ax, facecolor=&#39;none&#39;, edgecolor=&#39;red&#39;, linewidth=0.5)
+        if feature_type in [&#39;buildings&#39;, &#39;both&#39;]:
+            df_buildings.plot(ax=ax, facecolor=&#39;none&#39;, edgecolor=&#39;blue&#39;, linewidth=0.5)
+
+        ax.set_xlim(0, 1200)
+        ax.set_ylim(600, 0)
+        ax.axis(&#39;off&#39;)
+
+        plt.savefig(os.path.join(output_folder, f&#39;{feature_type}_{index}_with_features.jpg&#39;), bbox_inches=&#39;tight&#39;, pad_inches=0)
+        plt.close(fig)
+    
+    def subset(self, df, df_buildings, index, distance=75):
+        &#34;&#34;&#34;
+        Create a subset of the data based on a buffer around a selected feature.
+
+        Args:
+            df (GeoDataFrame): GeoDataFrame containing parcel data.
+            df_buildings (GeoDataFrame): GeoDataFrame containing building data.
+            index (int): Index of the feature to create a subset around.
+            distance (float, optional): Buffer distance in meters. Defaults to 75.
+
+        Returns:
+            tuple: A tuple containing:
+                - GeoDataFrame: Subset of parcel data.
+                - GeoDataFrame: Subset of building data.
+                - tuple: Bounding box of the subset area.
+        &#34;&#34;&#34;
+
+        selected_feature = df.loc[index]
+        geometry_buffer = selected_feature.geometry.buffer(distance)
+        geometry_bounds = selected_feature.geometry.buffer(distance-70)
+        return df[df.within(geometry_buffer)], df_buildings[df_buildings.within(geometry_buffer)], geometry_bounds.bounds
+
+    def generate_maps(self, parcels_output_path, buildings_output_path, start_index=0, end_index=10, distance=75, map_type=&#39;mapbox_satellite&#39;):
+        &#34;&#34;&#34;
+        Generate maps for a range of indices using the specified map type.
+
+        Args:
+            parcels_output_path (str): Output folder for parcel maps.
+            buildings_output_path (str): Output folder for building maps.
+            start_index (int, optional): Starting index for map generation. Defaults to 0.
+            end_index (int, optional): Ending index for map generation. Defaults to 10.
+            distance (float, optional): Buffer distance in meters for subsetting. Defaults to 75.
+            map_type (str, optional): Type of map to generate. Defaults to &#39;mapbox_satellite&#39;.
+                Supported types:
+                - &#39;mapbox_satellite&#39;: Uses Mapbox satellite imagery.
+                - &#39;simple&#39;: Creates a simple map without satellite imagery.
+                - &#39;nasa_gibs_rest&#39;: Uses NASA GIBS REST API for satellite imagery.
+                - &#39;nasa_gibs_wms&#39;: Uses NASA GIBS WMS for satellite imagery.
+
+        Raises:
+            ValueError: If an unsupported map type is specified.
+
+        Note:
+            This method generates multiple maps based on the specified parameters and map type.
+            The output files are saved in the provided output folders.
+        &#34;&#34;&#34;
+        
+        for i in range(start_index, end_index):
+            subset_features = self.subset(self.df_parcels, self.df_parcels_buildings, i, distance)
+            
+            if map_type == &#39;mapbox_satellite&#39;:
+                self.map_maker_mapbox_satellite(subset_features[0], subset_features[1], subset_features[2], i, 18, &#39;buildings&#39;, output_folder=buildings_output_path)
+                self.map_maker_mapbox_satellite(subset_features[0], subset_features[1], subset_features[2], i, 18, &#39;parcels&#39;, output_folder=parcels_output_path)
+            elif map_type == &#39;simple&#39;:
+                self.map_maker_simple(subset_features[0], subset_features[1], subset_features[2], i, &#39;buildings&#39;, output_folder=buildings_output_path)
+                self.map_maker_simple(subset_features[0], subset_features[1], subset_features[2], i, &#39;parcels&#39;, output_folder=parcels_output_path)
+            elif map_type == &#39;nasa_gibs_rest&#39;:
+                self.map_maker_nasa_gibs_rest(subset_features[0], subset_features[1], subset_features[2], i, 18, &#39;both&#39;, output_folder=buildings_output_path)
+            elif map_type == &#39;nasa_gibs_wms&#39;:
+                self.map_maker_nasa_gibs_wms(subset_features[0], subset_features[1], subset_features[2], i, 18, &#39;both&#39;, output_folder=buildings_output_path)
+            else:
+                raise ValueError(f&#34;Unsupported map type: {map_type}&#34;)
+        plt.close(&#39;all&#39;)</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="ParcelsBuildingsMap.ParcelBuildingMapper.add_geometries"><code class="name flex">
+<span>def <span class="ident">add_geometries</span></span>(<span>self, ax, df_parcels, crs_epsg, random_color=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Add geometries to the given axes object.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>ax</code></strong> :&ensp;<code>GeoAxesSubplot</code></dt>
+<dd>The axes object to add geometries to.</dd>
+<dt><strong><code>df_parcels</code></strong> :&ensp;<code>GeoDataFrame</code></dt>
+<dd>GeoDataFrame containing parcel data.</dd>
+<dt><strong><code>crs_epsg</code></strong> :&ensp;<code>CRS</code></dt>
+<dd>Coordinate reference system for the geometries.</dd>
+<dt><strong><code>random_color</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>Whether to use random colors. Defaults to False.</dd>
+</dl></div>
+</dd>
+<dt id="ParcelsBuildingsMap.ParcelBuildingMapper.generate_maps"><code class="name flex">
+<span>def <span class="ident">generate_maps</span></span>(<span>self, parcels_output_path, buildings_output_path, start_index=0, end_index=10, distance=75, map_type='mapbox_satellite')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Generate maps for a range of indices using the specified map type.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>parcels_output_path</code></strong> :&ensp;<code>str</code></dt>
+<dd>Output folder for parcel maps.</dd>
+<dt><strong><code>buildings_output_path</code></strong> :&ensp;<code>str</code></dt>
+<dd>Output folder for building maps.</dd>
+<dt><strong><code>start_index</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>Starting index for map generation. Defaults to 0.</dd>
+<dt><strong><code>end_index</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>Ending index for map generation. Defaults to 10.</dd>
+<dt><strong><code>distance</code></strong> :&ensp;<code>float</code>, optional</dt>
+<dd>Buffer distance in meters for subsetting. Defaults to 75.</dd>
+<dt><strong><code>map_type</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>Type of map to generate. Defaults to 'mapbox_satellite'.
+Supported types:
+- 'mapbox_satellite': Uses Mapbox satellite imagery.
+- 'simple': Creates a simple map without satellite imagery.
+- 'nasa_gibs_rest': Uses NASA GIBS REST API for satellite imagery.
+- 'nasa_gibs_wms': Uses NASA GIBS WMS for satellite imagery.</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>ValueError</code></dt>
+<dd>If an unsupported map type is specified.</dd>
+</dl>
+<h2 id="note">Note</h2>
+<p>This method generates multiple maps based on the specified parameters and map type.
+The output files are saved in the provided output folders.</p></div>
+</dd>
+<dt id="ParcelsBuildingsMap.ParcelBuildingMapper.join_parcels_buildings"><code class="name flex">
+<span>def <span class="ident">join_parcels_buildings</span></span>(<span>self, parcels, buildings)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Join parcel and building data based on spatial relationship.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>parcels</code></strong> :&ensp;<code>GeoDataFrame</code></dt>
+<dd>GeoDataFrame containing parcel data.</dd>
+<dt><strong><code>buildings</code></strong> :&ensp;<code>GeoDataFrame</code></dt>
+<dd>GeoDataFrame containing building data.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>GeoDataFrame</code></dt>
+<dd>A GeoDataFrame containing joined parcel and building data.</dd>
+</dl></div>
+</dd>
+<dt id="ParcelsBuildingsMap.ParcelBuildingMapper.load_data"><code class="name flex">
+<span>def <span class="ident">load_data</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Load parcel and building data from shapefiles and prepare it for mapping.</p>
+<p>This method reads the shapefile data, transforms it to the specified coordinate system,
+assigns random colors to parcels, and joins the parcel and building data.</p></div>
+</dd>
+<dt id="ParcelsBuildingsMap.ParcelBuildingMapper.map_maker_mapbox_satellite"><code class="name flex">
+<span>def <span class="ident">map_maker_mapbox_satellite</span></span>(<span>self, df_parcels, df_buildings, bounds, index, scale=10, feature_type='both', random_color=False, output_folder='')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Create a map using Mapbox satellite imagery as a base layer.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>df_parcels</code></strong> :&ensp;<code>GeoDataFrame</code></dt>
+<dd>GeoDataFrame containing parcel data.</dd>
+<dt><strong><code>df_buildings</code></strong> :&ensp;<code>GeoDataFrame</code></dt>
+<dd>GeoDataFrame containing building data.</dd>
+<dt><strong><code>bounds</code></strong> :&ensp;<code>tuple</code></dt>
+<dd>Bounding box for the map (minx, miny, maxx, maxy).</dd>
+<dt><strong><code>index</code></strong> :&ensp;<code>int</code></dt>
+<dd>Index for the output filename.</dd>
+<dt><strong><code>scale</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>Zoom level for the satellite imagery. Defaults to 10.</dd>
+<dt><strong><code>feature_type</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>Type of features to display ('parcels', 'buildings', or 'both'). Defaults to 'both'.</dd>
+<dt><strong><code>random_color</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>Whether to use random colors. Defaults to False.</dd>
+<dt><strong><code>output_folder</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>Folder to save the output image. Defaults to ''.</dd>
+</dl></div>
+</dd>
+<dt id="ParcelsBuildingsMap.ParcelBuildingMapper.map_maker_nasa_gibs_rest"><code class="name flex">
+<span>def <span class="ident">map_maker_nasa_gibs_rest</span></span>(<span>self, df_parcels, df_buildings, bounds, index, scale=10, feature_type='both', random_color=False, output_folder='')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Create a map using NASA GIBS REST API for satellite imagery as a base layer.</p>
+<p>This method generates a map using a single tile from the NASA GIBS REST API as the base layer,
+and overlays parcel and/or building data on top of it.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>df_parcels</code></strong> :&ensp;<code>GeoDataFrame</code></dt>
+<dd>GeoDataFrame containing parcel data.</dd>
+<dt><strong><code>df_buildings</code></strong> :&ensp;<code>GeoDataFrame</code></dt>
+<dd>GeoDataFrame containing building data.</dd>
+<dt><strong><code>bounds</code></strong> :&ensp;<code>tuple</code></dt>
+<dd>Bounding box for the map (minx, miny, maxx, maxy).</dd>
+<dt><strong><code>index</code></strong> :&ensp;<code>int</code></dt>
+<dd>Index for the output filename.</dd>
+<dt><strong><code>scale</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>Zoom level for the satellite imagery. Defaults to 10.</dd>
+<dt><strong><code>feature_type</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>Type of features to display ('parcels', 'buildings', or 'both'). Defaults to 'both'.</dd>
+<dt><strong><code>random_color</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>Whether to use random colors for features. Defaults to False.</dd>
+<dt><strong><code>output_folder</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>Folder to save the output image. Defaults to ''.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>None</p>
+<h2 id="note">Note</h2>
+<p>This method saves the generated map as a JPEG file in the specified output folder.
+The filename format is '{feature_type}_{index}.jpg'.</p></div>
+</dd>
+<dt id="ParcelsBuildingsMap.ParcelBuildingMapper.map_maker_nasa_gibs_wms"><code class="name flex">
+<span>def <span class="ident">map_maker_nasa_gibs_wms</span></span>(<span>self, df_parcels, df_buildings, bounds, index, scale=10, feature_type='both', random_color=False, output_folder='')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Create a map using NASA GIBS Web Map Service (WMS) for satellite imagery as a base layer.</p>
+<p>This method generates two maps:
+1. A base map using the NASA GIBS WMS satellite imagery.
+2. An overlay map with parcel and/or building data on top of the satellite imagery.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>df_parcels</code></strong> :&ensp;<code>GeoDataFrame</code></dt>
+<dd>GeoDataFrame containing parcel data.</dd>
+<dt><strong><code>df_buildings</code></strong> :&ensp;<code>GeoDataFrame</code></dt>
+<dd>GeoDataFrame containing building data.</dd>
+<dt><strong><code>bounds</code></strong> :&ensp;<code>tuple</code></dt>
+<dd>Bounding box for the map (minx, miny, maxx, maxy).</dd>
+<dt><strong><code>index</code></strong> :&ensp;<code>int</code></dt>
+<dd>Index for the output filename.</dd>
+<dt><strong><code>scale</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>Zoom level for the satellite imagery. Defaults to 10.</dd>
+<dt><strong><code>feature_type</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>Type of features to display ('parcels', 'buildings', or 'both'). Defaults to 'both'.</dd>
+<dt><strong><code>random_color</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>Whether to use random colors for features. Defaults to False.</dd>
+<dt><strong><code>output_folder</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>Folder to save the output images. Defaults to ''.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>None</p>
+<h2 id="note">Note</h2>
+<p>This method saves two JPEG files in the specified output folder:
+1. '{feature_type}<em index>{index}.jpg': The base satellite image.
+2. '{feature_type}</em>_with_features.jpg': The satellite image with overlaid features.</p></div>
+</dd>
+<dt id="ParcelsBuildingsMap.ParcelBuildingMapper.map_maker_simple"><code class="name flex">
+<span>def <span class="ident">map_maker_simple</span></span>(<span>self, df_parcels, df_buildings, bounds, index, feature_type='both', random_color=False, output_folder='')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Create a simple map without satellite imagery.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>df_parcels</code></strong> :&ensp;<code>GeoDataFrame</code></dt>
+<dd>GeoDataFrame containing parcel data.</dd>
+<dt><strong><code>df_buildings</code></strong> :&ensp;<code>GeoDataFrame</code></dt>
+<dd>GeoDataFrame containing building data.</dd>
+<dt><strong><code>bounds</code></strong> :&ensp;<code>tuple</code></dt>
+<dd>Bounding box for the map (minx, miny, maxx, maxy).</dd>
+<dt><strong><code>index</code></strong> :&ensp;<code>int</code></dt>
+<dd>Index for the output filename.</dd>
+<dt><strong><code>feature_type</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>Type of features to display ('parcels', 'buildings', or 'both'). Defaults to 'both'.</dd>
+<dt><strong><code>random_color</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>Whether to use random colors. Defaults to False.</dd>
+<dt><strong><code>output_folder</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>Folder to save the output image. Defaults to ''.</dd>
+</dl></div>
+</dd>
+<dt id="ParcelsBuildingsMap.ParcelBuildingMapper.random_hex_color"><code class="name flex">
+<span>def <span class="ident">random_hex_color</span></span>(<span>self, use_seed=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Generate a random hex color code.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>use_seed</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>Whether to use a seed for random number generation. Defaults to False.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>str</code></dt>
+<dd>A randomly generated hex color code.</dd>
+</dl></div>
+</dd>
+<dt id="ParcelsBuildingsMap.ParcelBuildingMapper.subset"><code class="name flex">
+<span>def <span class="ident">subset</span></span>(<span>self, df, df_buildings, index, distance=75)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Create a subset of the data based on a buffer around a selected feature.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>df</code></strong> :&ensp;<code>GeoDataFrame</code></dt>
+<dd>GeoDataFrame containing parcel data.</dd>
+<dt><strong><code>df_buildings</code></strong> :&ensp;<code>GeoDataFrame</code></dt>
+<dd>GeoDataFrame containing building data.</dd>
+<dt><strong><code>index</code></strong> :&ensp;<code>int</code></dt>
+<dd>Index of the feature to create a subset around.</dd>
+<dt><strong><code>distance</code></strong> :&ensp;<code>float</code>, optional</dt>
+<dd>Buffer distance in meters. Defaults to 75.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>tuple</code></dt>
+<dd>A tuple containing:
+- GeoDataFrame: Subset of parcel data.
+- GeoDataFrame: Subset of building data.
+- tuple: Bounding box of the subset area.</dd>
+</dl></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="ParcelsBuildingsMap.ParcelBuildingMapper" href="#ParcelsBuildingsMap.ParcelBuildingMapper">ParcelBuildingMapper</a></code></h4>
+<ul class="">
+<li><code><a title="ParcelsBuildingsMap.ParcelBuildingMapper.add_geometries" href="#ParcelsBuildingsMap.ParcelBuildingMapper.add_geometries">add_geometries</a></code></li>
+<li><code><a title="ParcelsBuildingsMap.ParcelBuildingMapper.generate_maps" href="#ParcelsBuildingsMap.ParcelBuildingMapper.generate_maps">generate_maps</a></code></li>
+<li><code><a title="ParcelsBuildingsMap.ParcelBuildingMapper.join_parcels_buildings" href="#ParcelsBuildingsMap.ParcelBuildingMapper.join_parcels_buildings">join_parcels_buildings</a></code></li>
+<li><code><a title="ParcelsBuildingsMap.ParcelBuildingMapper.load_data" href="#ParcelsBuildingsMap.ParcelBuildingMapper.load_data">load_data</a></code></li>
+<li><code><a title="ParcelsBuildingsMap.ParcelBuildingMapper.map_maker_mapbox_satellite" href="#ParcelsBuildingsMap.ParcelBuildingMapper.map_maker_mapbox_satellite">map_maker_mapbox_satellite</a></code></li>
+<li><code><a title="ParcelsBuildingsMap.ParcelBuildingMapper.map_maker_nasa_gibs_rest" href="#ParcelsBuildingsMap.ParcelBuildingMapper.map_maker_nasa_gibs_rest">map_maker_nasa_gibs_rest</a></code></li>
+<li><code><a title="ParcelsBuildingsMap.ParcelBuildingMapper.map_maker_nasa_gibs_wms" href="#ParcelsBuildingsMap.ParcelBuildingMapper.map_maker_nasa_gibs_wms">map_maker_nasa_gibs_wms</a></code></li>
+<li><code><a title="ParcelsBuildingsMap.ParcelBuildingMapper.map_maker_simple" href="#ParcelsBuildingsMap.ParcelBuildingMapper.map_maker_simple">map_maker_simple</a></code></li>
+<li><code><a title="ParcelsBuildingsMap.ParcelBuildingMapper.random_hex_color" href="#ParcelsBuildingsMap.ParcelBuildingMapper.random_hex_color">random_hex_color</a></code></li>
+<li><code><a title="ParcelsBuildingsMap.ParcelBuildingMapper.subset" href="#ParcelsBuildingsMap.ParcelBuildingMapper.subset">subset</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.1</a>.</p>
+</footer>
+</body>
+</html>
