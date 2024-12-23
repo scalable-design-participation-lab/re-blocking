@@ -198,9 +198,10 @@ scripts/
 .ipynb_checkpoints
 
 # test data and output
-data/*
+data/
 ensemble-model/00 Archive/
 ensemble-model/vae-output/
 ensemble-model/diffusion-output/
 ensemble-model/softmax-output/
 ensemble-model/models/
+model-evaluation/benchmark-output/
