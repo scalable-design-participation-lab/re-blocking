@@ -12,4 +12,4 @@
 module load anaconda3/2022.05 cuda/11.8
 source activate /home/l.schrage/.conda/envs/re-blocking_env
 
-python3 /work/re-blocking/pytorch-CycleGAN-and-pix2pix/train.py --dataroot /work/re-blocking/data/all-cities --checkpoints_dir /work/re-blocking/checkpoints --name combined-p2p-500-150-v100 --model pix2pix --direction AtoB --save_epoch_freq 1 --continue_train --epoch_count 286 --n_epochs 500 --batch_size 150
+python3 /work/re-blocking/pytorch-CycleGAN-and-pix2pix/train.py --dataroot /work/re-blocking/data/all-cities --checkpoints_dir /work/re-blocking/checkpoints --name combined-p2p-500-150-v100 --model pix2pix --direction AtoB --save_epoch_freq 1 --continue_train --epoch_count 287 --n_epochs 500 --batch_size 150
