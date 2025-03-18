@@ -45,6 +45,7 @@ import gc
 from tqdm import tqdm
 from pathlib import Path
 import json
+import sys  # Added for sys.exit
 
 # Load environment variables and suppress warnings
 load_dotenv()
@@ -69,7 +70,7 @@ DEFAULT_COLOR_MAPPING_FILE = os.path.join(OUTPUT_DIR, "parcel_color_mapping.json
 # Processing parameters
 BUFFER_DISTANCE = 200      # Buffer (map units) around each parcel
 NUM_SAMPLES = 1000         # Total number of samples to process
-BATCH_SIZE = 10            # Process samples in batches
+BATCH_SIZE = 100           # Process samples in batches
 USE_BLOCKS = True          # Whether to use block boundaries for clipping Voronoi cells
 
 # Visualization settings
@@ -175,7 +176,7 @@ def simplified_voronoi(buildings_gdf, clip_geometry):
                 result_cells.append({
                     'building_id': idx,
                     'geometry': cell,
-                    'color': None  # to be updated via spatial join and mapping
+                    'color': random_hex_color(int(idx))  # Add a default color
                 })
         except Exception as e:
             print(f"Error creating cell for building {idx}: {e}")
@@ -229,6 +230,10 @@ def split_building_by_parcels(building, parcels):
     """
     fragments = []
     for idx, row in parcels.iterrows():
+        # Skip if parcel has no color
+        if 'color' not in row:
+            continue
+            
         inter = building.intersection(row.geometry)
         if not inter.is_empty:
             if inter.geom_type == 'GeometryCollection':
@@ -249,13 +254,18 @@ def process_sample(i, parcel_idx, parcels_df, buildings_df, blocks_df, output_di
       - Subset parcels and buildings that intersect the buffered area.
       - Use a spatial join to filter parcels to those that contain at least one building.
       - If no parcels with buildings exist, skip the sample.
-      - Generate Voronoi tessellation, perform a spatial join to assign each Voronoi cell the parcel it intersects,
-        then override its color using the provided color_mapping.
+      - Generate Voronoi tessellation, then find which parcel each cell overlaps most with
+        and assign the corresponding color from the color_mapping.
       - Render and save the Voronoi tessellation image.
       - If --with-buildings is specified, split each building by parcel boundaries so that each fragment gets 
         the correct color and render a separate building overlay image.
     """
     try:
+        # Check if parcel_idx exists in parcels_df
+        if parcel_idx not in parcels_df.index:
+            print(f"Sample {i}: Parcel index {parcel_idx} not found in parcels dataframe, skipping.")
+            return
+            
         parcel = parcels_df.loc[parcel_idx]
         area_geometry = parcel.geometry.buffer(BUFFER_DISTANCE * 0.75)
         
@@ -284,17 +294,46 @@ def process_sample(i, parcel_idx, parcels_df, buildings_df, blocks_df, output_di
             print(f"Sample {i}: No buildings found in the area, skipping.")
             return
         
+        # Ensure parcels have color values from the color mapping
+        parcels_with_buildings['color'] = parcels_with_buildings.index.map(
+            lambda idx: color_mapping.get(str(idx), random_hex_color(int(idx)))
+        )
+        
         # Generate Voronoi tessellation from all buildings.
         voronoi_cells = generate_voronoi_tessellation(all_buildings, clip_geometry)
         if voronoi_cells.empty:
             print(f"Sample {i}: No Voronoi cells generated, skipping.")
             return
         
-        # Spatial join: assign each Voronoi cell the parcel it intersects.
-        joined = gpd.sjoin(voronoi_cells, parcels_with_buildings[['color', 'geometry']], how='left', predicate='intersects')
-        joined_grouped = joined.groupby(joined.index).first()
-        joined_grouped['color'] = joined_grouped['index_right'].apply(lambda idx: color_mapping.get(str(idx), None))
-        voronoi_cells.loc[joined_grouped.index, 'color'] = joined_grouped['color']
+        # For each Voronoi cell, find the parcel with maximum overlap and use its color
+        cell_colors = {}
+        for cell_idx, cell in voronoi_cells.iterrows():
+            overlaps = []
+            for parcel_idx, parcel_row in parcels_with_buildings.iterrows():
+                intersection = cell.geometry.intersection(parcel_row.geometry)
+                if not intersection.is_empty:
+                    overlaps.append((parcel_idx, intersection.area))
+            
+            if overlaps:
+                # Get the parcel with maximum overlap area
+                max_overlap_parcel_idx = max(overlaps, key=lambda x: x[1])[0]
+                # Get color directly from the mapping file (as string key)
+                max_parcel_color = color_mapping.get(str(max_overlap_parcel_idx))
+                if max_parcel_color:
+                    cell_colors[cell_idx] = max_parcel_color
+                else:
+                    # Fallback to the color in the parcels dataframe if missing in mapping
+                    cell_colors[cell_idx] = parcels_with_buildings.loc[max_overlap_parcel_idx, 'color']
+        
+        # Apply the colors to Voronoi cells
+        for cell_idx, color in cell_colors.items():
+            voronoi_cells.loc[cell_idx, 'color'] = color
+        
+        # Ensure all cells have a color (fallback to initial colors for any missing)
+        if 'color' not in voronoi_cells.columns or voronoi_cells['color'].isna().any():
+            missing_colors = voronoi_cells[voronoi_cells['color'].isna()].index if 'color' in voronoi_cells.columns else voronoi_cells.index
+            for idx in missing_colors:
+                voronoi_cells.loc[idx, 'color'] = random_hex_color(int(idx))
         
         # Render Voronoi image.
         voronoi_output = os.path.join(output_dirs['voronoi'], f"voronoi_{i:06d}.jpg")
@@ -316,7 +355,7 @@ def process_sample(i, parcel_idx, parcels_df, buildings_df, blocks_df, output_di
         
         print(f"Sample {i} processed successfully.")
     except Exception as e:
-        print(f"Error processing sample {i} (parcel index {parcel_idx}): {e}")
+        print(f"Error processing sample {i} (parcel index {parcel_idx}): {str(e)}")
 
 def generate_brooklyn_voronoi(buildings_path=BUILDINGS_PATH, parcels_path=PARCELS_PATH, blocks_path=BLOCKS_PATH,
                               sample_file=SAMPLE_FILE, output_dir=OUTPUT_DIR, num_samples=NUM_SAMPLES, 
@@ -335,6 +374,12 @@ def generate_brooklyn_voronoi(buildings_path=BUILDINGS_PATH, parcels_path=PARCEL
     if generate_buildings:
         os.makedirs(VORONOI_BUILDINGS_DIR, exist_ok=True)
     
+    # Verify color mapping file exists
+    if not os.path.exists(color_mapping_file):
+        print(f"Error: Color mapping file {color_mapping_file} not found.")
+        print("Please run the parcels-buildings_ground-truth.py script first to generate the mapping.")
+        sys.exit(1)
+    
     print(f"Loading building data from: {buildings_path}")
     if not os.path.exists(buildings_path):
         print("Building shapefile not found.")
@@ -349,21 +394,36 @@ def generate_brooklyn_voronoi(buildings_path=BUILDINGS_PATH, parcels_path=PARCEL
     parcels_df = gpd.read_file(parcels_path).to_crs(3857)
     print(f"Loaded {len(parcels_df)} parcels.")
     
-    if not os.path.exists(color_mapping_file):
-        print(f"Color mapping file {color_mapping_file} not found. Exiting.")
-        return
-    with open(color_mapping_file, 'r') as f:
-        color_mapping = json.load(f)
-    print(f"Loaded color mapping for {len(color_mapping)} parcels from {color_mapping_file}")
+    # Load color mapping
+    try:
+        with open(color_mapping_file, 'r') as f:
+            color_mapping = json.load(f)
+        print(f"Loaded color mapping for {len(color_mapping)} parcels from {color_mapping_file}")
+    except Exception as e:
+        print(f"Error loading color mapping: {e}")
+        print("Generating new random colors for parcels")
+        color_mapping = {str(idx): random_hex_color(int(idx)) for idx in parcels_df.index}
+        # Save the new color mapping
+        with open(color_mapping_file, 'w') as f:
+            json.dump(color_mapping, f, indent=2)
+        print(f"Generated and saved new color mapping for {len(color_mapping)} parcels")
     
     blocks_df = None
     if USE_BLOCKS:
         blocks_df = get_blocks(parcels_df, blocks_path)
     
     if os.path.exists(sample_file):
-        sampled_indices = np.load(sample_file)
-        print(f"Loaded {len(sampled_indices)} sample indices from {sample_file}")
+        try:
+            sampled_indices = np.load(sample_file)
+            print(f"Loaded {len(sampled_indices)} sample indices from {sample_file}")
+        except Exception as e:
+            print(f"Error loading sample file: {e}")
+            sampled_indices = None
     else:
+        sampled_indices = None
+        
+    if sampled_indices is None:
+        print("Generating new sample indices")
         if len(parcels_df) >= num_samples:
             sampled_indices = np.random.choice(parcels_df.index, num_samples, replace=False)
         else:
@@ -380,10 +440,21 @@ def generate_brooklyn_voronoi(buildings_path=BUILDINGS_PATH, parcels_path=PARCEL
     for start in tqdm(range(0, total_samples, BATCH_SIZE), desc="Processing batches"):
         end = min(start + BATCH_SIZE, total_samples)
         batch = sampled_indices[start:end]
-        for offset, parcel_idx in tqdm(enumerate(batch), total=len(batch), desc="Processing samples in batch", leave=False):
-            process_sample(start + offset, parcel_idx, parcels_df, buildings_df, blocks_df,
-                           output_dirs=output_dirs, generate_buildings=generate_buildings,
-                           color_mapping=color_mapping)
+        
+        # Check for keyboard interrupt more gracefully
+        try:
+            for offset, parcel_idx in tqdm(enumerate(batch), total=len(batch), desc="Processing samples in batch", leave=False):
+                process_sample(start + offset, parcel_idx, parcels_df, buildings_df, blocks_df,
+                            output_dirs=output_dirs, generate_buildings=generate_buildings,
+                            color_mapping=color_mapping)
+        except KeyboardInterrupt:
+            print("\nProcess interrupted by user. Saving progress...")
+            checkpoint_file = os.path.join(output_dir, "last_processed_voronoi_index.txt")
+            with open(checkpoint_file, 'w') as f:
+                f.write(str(start + offset if 'offset' in locals() else start))
+            print(f"Checkpoint saved up to sample index {start + offset if 'offset' in locals() else start}.")
+            break
+            
         gc.collect()
         checkpoint_file = os.path.join(output_dir, "last_processed_voronoi_index.txt")
         with open(checkpoint_file, 'w') as f:
