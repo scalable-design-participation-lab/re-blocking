@@ -1,11 +1,11 @@
 #!/bin/bash
 
 # Set the paths to your input folders
-folderA="img/buildings"
-folderB="img/parcels"
+folderA="buildings"
+folderB="parcels"
 
 # Set the output folder
-outputFolder="img/combined"
+outputFolder="combined"
 # Create the output folder if it doesn't exist
 mkdir -p "$outputFolder"
 
