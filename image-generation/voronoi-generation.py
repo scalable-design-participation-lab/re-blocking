@@ -70,7 +70,7 @@ DEFAULT_COLOR_MAPPING_FILE = os.path.join(OUTPUT_DIR, "parcel_color_mapping.json
 # Processing parameters
 BUFFER_DISTANCE = 200      # Buffer (map units) around each parcel
 NUM_SAMPLES = 1000         # Total number of samples to process
-BATCH_SIZE = 100           # Process samples in batches
+BATCH_SIZE = 50           # Process samples in batches
 USE_BLOCKS = True          # Whether to use block boundaries for clipping Voronoi cells
 
 # Visualization settings
