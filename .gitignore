@@ -207,5 +207,6 @@ ensemble-model/models/
 ensemble-model/ensemble-output/
 model-evaluation/benchmark-output/
 model-evaluation/benchmark-outputs/
+model-evaluation/parcel_benchmark_results/
 image-generation/brooklyn_comparison/
 image-generation/brooklyn_comparison_transparent/
